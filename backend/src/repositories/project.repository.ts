@@ -1,5 +1,5 @@
+import { Project } from "@prisma/client";
 import { prisma } from "../prisma/client";
-import { Project } from "../generated/prisma";
 
 export const ProjectRepository = {
   getAll: () => prisma.project.findMany(),
