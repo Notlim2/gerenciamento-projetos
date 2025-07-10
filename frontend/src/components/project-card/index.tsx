@@ -13,12 +13,18 @@ import CheckIcon from "@mui/icons-material/Check";
 import dayjs from "dayjs";
 import type { Project } from "../../types/project";
 import { useNavigate } from "react-router-dom";
+import { ConfirmDialog } from "../confirm-dialog";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ProjectCardProps {
   project: Project;
+  remove: (project: Project) => void;
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, remove }: ProjectCardProps) {
+  const [removeDialogOpen, setRemoveDialogOpen] = useState(false);
+  const { t } = useTranslation("", { keyPrefix: "projects" });
   const navigate = useNavigate();
 
   function editProject() {
@@ -29,37 +35,50 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   }
 
   return (
-    <Card>
-      <CardHeader
-        title={
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
+    <>
+      <Card>
+        <CardHeader
+          title={
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Typography>{project.name}</Typography>
+              {!!project.done && (
+                <Avatar sx={{ background: green[500] }} aria-label="feito">
+                  <CheckIcon />
+                </Avatar>
+              )}
+            </Stack>
+          }
+          subheader={dayjs(project.createdAt).format("DD MMM YYYY ")}
+        />
+        <CardContent>
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            {project.description}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <IconButton
+            aria-label="excluir"
+            color="error"
+            onClick={() => setRemoveDialogOpen(true)}
           >
-            <Typography>{project.name}</Typography>
-            {!!project.done && (
-              <Avatar sx={{ background: green[500] }} aria-label="feito">
-                <CheckIcon />
-              </Avatar>
-            )}
-          </Stack>
-        }
-        subheader={dayjs(project.createdAt).format("DD MMM YYYY ")}
+            <DeleteIcon />
+          </IconButton>
+          <IconButton aria-label="editar" color="primary" onClick={editProject}>
+            <EditIcon />
+          </IconButton>
+        </CardActions>
+      </Card>
+      <ConfirmDialog
+        open={removeDialogOpen}
+        onClose={() => setRemoveDialogOpen(false)}
+        title={t("remove.title")}
+        text={t("remove.text")}
+        onConfirm={() => remove(project)}
       />
-      <CardContent>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          {project.description}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="excluir" color="error">
-          <DeleteIcon />
-        </IconButton>
-        <IconButton aria-label="editar" color="primary" onClick={editProject}>
-          <EditIcon />
-        </IconButton>
-      </CardActions>
-    </Card>
+    </>
   );
 }

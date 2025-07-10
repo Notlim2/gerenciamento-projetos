@@ -42,6 +42,10 @@ export function EditProject() {
     return result.data;
   }
 
+  function listProjects() {
+    navigate("/projects");
+  }
+
   const { trigger, isMutating, error } = useSWRMutation(
     "/projects",
     create,
@@ -50,11 +54,8 @@ export function EditProject() {
 
   const submit: SubmitHandler<ProjectUpdate> = (data) => {
     trigger(data);
+    listProjects();
   };
-
-  function listProjects() {
-    navigate("/projects");
-  }
 
   useEffect(() => {
     if (!project) {

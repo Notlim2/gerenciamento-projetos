@@ -25,16 +25,16 @@ export function CreateProject() {
     return result.data;
   }
 
+  function listProjects() {
+    navigate("/projects");
+  }
+
   const { trigger, isMutating, error } = useSWRMutation("/projects", create);
 
   const submit: SubmitHandler<ProjectCreate> = async (data) => {
     await trigger(data);
-    navigate("/projects");
+    listProjects();
   };
-
-  function listProjects() {
-    navigate("/projects");
-  }
 
   return (
     <>

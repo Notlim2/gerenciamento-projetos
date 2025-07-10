@@ -2,7 +2,22 @@
   "header": { "title": "Gerenciamento de Projetos" },
   "projects": {
     "list": {
-      "title": "Projetos"
+      "title": "Projetos",
+      "success": {
+        "delete": "Projeto \"{{name}}\" removido com sucesso!"
+      },
+      "error": {
+        "delete": "Houve um problema ao remover um projeto. Tente novamente mais tarde!",
+        "list": "Houve um problema ao listar os projetos. Tente novamente mais tarde!"
+      },
+      "alert": {
+        "notFoundForFilter": "Não foram encontrados projetos para os filtros informados!"
+      },
+      "filters": {
+        "search": {
+          "label": "Pesquisar..."
+        }
+      }
     },
     "create": {
       "title": "Cadastrar Projeto",
@@ -37,6 +52,14 @@
       "error": {
         "submit": "Houve um problema ao editar o projeto. Tente novamente mais tarde!"
       }
+    },
+    "remove": {
+      "title": "Remover Projeto",
+      "text": "Tem certeza que deseja remover este projeto?"
     }
+  },
+  "common": {
+    "no": "Não",
+    "yes": "Sim"
   }
 }
