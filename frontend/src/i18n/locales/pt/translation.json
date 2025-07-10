@@ -1,0 +1,28 @@
+{
+  "header": { "title": "Gerenciamento de Projetos" },
+  "projects": {
+    "list": {
+      "title": "Projetos"
+    },
+    "create": {
+      "title": "Cadastrar Projeto",
+      "name": {
+        "label": "Nome",
+        "errors": {
+          "required": "Informe um Nome"
+        }
+      },
+      "description": { "label": "Descrição" },
+      "buttons": {
+        "cancel": "Cancelar",
+        "confirm": "Cadastrar"
+      },
+      "error": {
+        "submit": "Houve um problema ao cadastrar o projeto. Tente novamente mais tarde!"
+      }
+    },
+    "edit": {
+      "title": "Editar Projeto"
+    }
+  }
+}

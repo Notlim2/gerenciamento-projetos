@@ -16,8 +16,13 @@
     "@mui/material": "^7.2.0",
     "axios": "^1.10.0",
     "dayjs": "^1.11.13",
+    "i18next": "^25.3.2",
+    "i18next-browser-languagedetector": "^8.2.0",
     "react": "^19.1.0",
+    "react-country-flag": "^3.1.0",
     "react-dom": "^19.1.0",
+    "react-hook-form": "^7.60.0",
+    "react-i18next": "^15.6.0",
     "react-router-dom": "^7.6.3",
     "swr": "^2.3.4",
     "use-debounce": "^10.0.5"

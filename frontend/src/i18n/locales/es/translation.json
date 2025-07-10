@@ -1,0 +1,25 @@
+{
+  "header": { "title": "Teste" },
+  "projects": {
+    "list": {
+      "title": "Projetos"
+    },
+    "create": {
+      "title": "Teste",
+      "name": {
+        "label": "Nome",
+        "errors": {
+          "required": "Inform um Nome"
+        }
+      },
+      "description": { "label": "Descrição" },
+      "buttons": {
+        "cancel": "Cancelar",
+        "confirm": "Cadastrar"
+      }
+    },
+    "edit": {
+      "title": "Editar Projeto"
+    }
+  }
+}

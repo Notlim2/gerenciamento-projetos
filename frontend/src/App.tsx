@@ -1,14 +1,14 @@
 import Container from "@mui/material/Container";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Projects } from "./pages/projects";
+import { BrowserRouter } from "react-router-dom";
+import { AppRoutes } from "./routes";
+import { AppHeader } from "./components/app-header";
 
 function App() {
   return (
     <BrowserRouter>
+      <AppHeader />
       <Container>
-        <Routes>
-          <Route path="" element={<Projects />} />
-        </Routes>
+        <AppRoutes />
       </Container>
     </BrowserRouter>
   );
