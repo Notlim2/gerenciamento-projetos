@@ -12,12 +12,22 @@ import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
 import dayjs from "dayjs";
 import type { Project } from "../../types/project";
+import { useNavigate } from "react-router-dom";
 
 interface ProjectCardProps {
   project: Project;
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
+  const navigate = useNavigate();
+
+  function editProject() {
+    if (!project.id) {
+      return;
+    }
+    navigate(`/projects/edit/${project.id}`);
+  }
+
   return (
     <Card>
       <CardHeader
@@ -46,7 +56,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <IconButton aria-label="excluir" color="error">
           <DeleteIcon />
         </IconButton>
-        <IconButton aria-label="editar" color="primary">
+        <IconButton aria-label="editar" color="primary" onClick={editProject}>
           <EditIcon />
         </IconButton>
       </CardActions>

@@ -14,18 +14,22 @@ datasource db {
 }
 
 model Project {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   description String?
+  createdAt   DateTime
+  updatedAt   DateTime?
 
   @@map("project")
 }
 
 model Task {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   description String?
   done        Boolean
+  createdAt   DateTime @map("created_at")
+  updatedAt   DateTime @map("updated_at")
 
   @@map("task")
 }

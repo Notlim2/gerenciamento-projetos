@@ -27,8 +27,9 @@ export function CreateProject() {
 
   const { trigger, isMutating, error } = useSWRMutation("/projects", create);
 
-  const submit: SubmitHandler<ProjectCreate> = (data) => {
-    trigger(data);
+  const submit: SubmitHandler<ProjectCreate> = async (data) => {
+    await trigger(data);
+    navigate("/projects");
   };
 
   function listProjects() {

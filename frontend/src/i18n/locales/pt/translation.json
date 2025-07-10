@@ -22,7 +22,21 @@
       }
     },
     "edit": {
-      "title": "Editar Projeto"
+      "title": "Editar Projeto",
+      "name": {
+        "label": "Nome",
+        "errors": {
+          "required": "Informe um Nome"
+        }
+      },
+      "description": { "label": "Descrição" },
+      "buttons": {
+        "cancel": "Cancelar",
+        "confirm": "Editar"
+      },
+      "error": {
+        "submit": "Houve um problema ao editar o projeto. Tente novamente mais tarde!"
+      }
     }
   }
 }
