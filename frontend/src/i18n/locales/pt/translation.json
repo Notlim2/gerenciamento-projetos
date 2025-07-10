@@ -39,7 +39,9 @@
       },
       "error": {
         "submit": "Houve um problema ao cadastrar o projeto. Tente novamente mais tarde!"
-      }
+      },
+      "create": "Cadastrar",
+      "projects": "Projetos"
     },
     "edit": {
       "title": "Editar Projeto",
@@ -56,7 +58,9 @@
       },
       "error": {
         "submit": "Houve um problema ao editar o projeto. Tente novamente mais tarde!"
-      }
+      },
+      "edit": "Editar",
+      "projects": "Projetos"
     },
     "remove": {
       "title": "Remover Projeto",
@@ -72,6 +76,8 @@
         }
       },
       "error": {
+        "project": "Houve um problema ao buscar o Projeto associado a tarefa.",
+        "projectNotFound": "Projeto associado a tarefa não encontrado.",
         "list": "Houve um problema ao listar as tarefas. Tente novamente mais tarde!",
         "delete": "Houve um problema ao remover uma tarefa. Tente novamente mais tarde!"
       },
@@ -80,7 +86,20 @@
       },
       "success": {
         "delete": "Projeto \"{{name}}\" removido com sucesso!"
-      }
+      },
+      "card": {
+        "edit": "Editar",
+        "remove": "Excluir",
+        "status": {
+          "PENDING": "A Fazer",
+          "IN_PROGRESS": "Fazendo",
+          "BLOCKED": "Bloqueada",
+          "CANCELED": "Cancelada",
+          "COMPLETED": "Feita"
+        }
+      },
+      "projects": "Projetos",
+      "tasks": "Tarefas"
     },
     "create": {
       "title": "Cadastrar Tarefa para o Projeto \"{{name}}\"",
@@ -96,7 +115,47 @@
       "buttons": {
         "cancel": "Cancelar",
         "confirm": "Cadastrar"
-      }
+      },
+      "error": {
+        "project": "Houve um problema ao buscar o Projeto associado a tarefa.",
+        "projectNotFound": "Projeto associado a tarefa não encontrado."
+      },
+      "create": "Cadastrar",
+      "projects": "Projetos",
+      "tasks": "Tarefas"
+    },
+    "edit": {
+      "title": "Editar Tarefa do Projeto \"{{name}}\"",
+      "name": {
+        "label": "Nome",
+        "errors": {
+          "required": "Informe um Nome"
+        }
+      },
+      "description": {
+        "label": "Descrição"
+      },
+      "status": {
+        "label": "Status",
+        "options": {
+          "pending": "A Fazer",
+          "inProgress": "Fazendo",
+          "blocked": "Bloqueada",
+          "canceled": "Cancelada",
+          "completed": "Feita"
+        }
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "confirm": "Editar"
+      },
+      "error": {
+        "project": "Houve um problema ao buscar o Projeto associado a tarefa.",
+        "task": "Tarefa não encontrada.",
+        "projectNotFound": "Projeto associado a tarefa não encontrado."
+      },
+      "projects": "Projetos",
+      "tasks": "Tarefas"
     },
     "remove": {
       "title": "Remover Tarefa",

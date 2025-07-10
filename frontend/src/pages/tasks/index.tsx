@@ -10,7 +10,9 @@ import Alert from "@mui/material/Alert";
 import Fab from "@mui/material/Fab";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Divider from "@mui/material/Divider";
+import MuiLink from "@mui/material/Link";
 import TaskCard from "../../components/task-card";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
@@ -18,7 +20,7 @@ import axios from "../../http-client";
 import { useDebounce } from "use-debounce";
 import type { Task } from "../../types/task";
 import { useTheme } from "@mui/material/styles";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link as RouterLink } from "react-router-dom";
 import { AppTitle } from "../../components/app-title";
 import { useTranslation } from "react-i18next";
 
@@ -136,9 +138,25 @@ export function Tasks() {
           </Grid>
         ) : (
           <>
+            <Grid size={{ xs: 12 }}>
+              <Breadcrumbs>
+                <MuiLink
+                  component={RouterLink}
+                  to="/projects"
+                  underline="hover"
+                >
+                  {t("projects")}
+                </MuiLink>
+                <Typography>{project.name}</Typography>
+                <Typography>{t("tasks")}</Typography>
+              </Breadcrumbs>
+            </Grid>
+            <Grid size={{ xs: 12 }}>
+              <Divider />
+            </Grid>
             <AppTitle title={t("title", { name: project.name })} />
-            <Grid container size={{ xs: 12 }}>
-              <Grid size={{ xs: 12, sm: 10 }}>
+            <Grid container size={{ xs: 12 }} spacing={1}>
+              <Grid size={{ xs: 9, sm: 10 }}>
                 <TextField
                   variant="filled"
                   label={t("filters.search.label")}
@@ -148,7 +166,7 @@ export function Tasks() {
                   fullWidth
                 />
               </Grid>
-              <Grid size={{ xs: 12, sm: 2 }}>
+              <Grid size={{ xs: 3, sm: 2 }}>
                 <Button
                   variant="contained"
                   fullWidth

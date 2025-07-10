@@ -6,10 +6,12 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
-import { green } from "@mui/material/colors";
+import { green, red } from "@mui/material/colors";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
+import BlockIcon from "@mui/icons-material/Block";
 import dayjs from "dayjs";
 import type { Task } from "../../types/task";
 import { useNavigate } from "react-router-dom";
@@ -25,17 +27,19 @@ interface TaskCardProps {
 
 export default function TaskCard({ task, remove }: TaskCardProps) {
   const [removeDialogOpen, setRemoveDialogOpen] = useState(false);
-  const { t } = useTranslation("", { keyPrefix: "tasks" });
+  const { t } = useTranslation("", { keyPrefix: "tasks.list.card" });
   const navigate = useNavigate();
 
   function editTask() {
     if (!task.id) {
       return;
     }
-    navigate(`/tasks/edit/${task.id}`);
+    navigate(`/projects/${task.projectId}/tasks/edit/${task.id}`);
   }
 
   const done = useMemo(() => task.status === "COMPLETED", [task.status]);
+  const canceled = useMemo(() => task.status === "CANCELED", [task.status]);
+  const blocked = useMemo(() => task.status === "BLOCKED", [task.status]);
 
   return (
     <>
@@ -47,13 +51,24 @@ export default function TaskCard({ task, remove }: TaskCardProps) {
               alignItems="center"
               justifyContent="space-between"
             >
-              <Typography>{task.name}</Typography>
+              <Typography>
+                {task.name} - {t(`status.${task.status}`)}
+              </Typography>
               {!!done && (
                 <Avatar sx={{ background: green[500] }} aria-label="feito">
                   <CheckIcon />
                 </Avatar>
               )}
-              {/* TODO - FAZER PARA CANCELADO */}
+              {!!canceled && (
+                <Avatar sx={{ background: red[500] }} aria-label="cancelado">
+                  <CloseIcon />
+                </Avatar>
+              )}
+              {!!blocked && (
+                <Avatar sx={{ background: red[500] }} aria-label="bloqueado">
+                  <BlockIcon />
+                </Avatar>
+              )}
             </Stack>
           }
           subheader={dayjs(task.createdAt).format("DD MMM YYYY ")}
@@ -64,7 +79,7 @@ export default function TaskCard({ task, remove }: TaskCardProps) {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <Tooltip title={t("list.card.remove")}>
+          <Tooltip title={t("remove")}>
             <IconButton
               aria-label="excluir"
               color="error"
@@ -73,7 +88,7 @@ export default function TaskCard({ task, remove }: TaskCardProps) {
               <DeleteIcon />
             </IconButton>
           </Tooltip>
-          <Tooltip title={t("list.card.edit")}>
+          <Tooltip title={t("edit")}>
             <IconButton aria-label="editar" color="primary" onClick={editTask}>
               <EditIcon />
             </IconButton>

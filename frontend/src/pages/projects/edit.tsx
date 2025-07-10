@@ -5,10 +5,13 @@ import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Stack from "@mui/material/Stack";
 import Alert from "@mui/material/Alert";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Typography from "@mui/material/Typography";
+import MuiLink from "@mui/material/Link";
 import { AppTitle } from "../../components/app-title";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link as RouterLink } from "react-router-dom";
 import useSWRMutation from "swr/mutation";
 import axiosInstance from "../../http-client";
 import useSWR from "swr";
@@ -69,6 +72,15 @@ export function EditProject() {
   return (
     <>
       <Grid container spacing={1}>
+        <Grid size={{ xs: 12 }}>
+          <Breadcrumbs>
+            <MuiLink component={RouterLink} to="/projects" underline="hover">
+              {t("projects")}
+            </MuiLink>
+            <Typography>{t("edit")}</Typography>
+            <Typography>{project?.name}</Typography>
+          </Breadcrumbs>
+        </Grid>
         <AppTitle title={t("title")} />
         <Grid container size={{ xs: 12 }} spacing={1}>
           {!!error && (

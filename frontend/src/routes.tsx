@@ -4,6 +4,7 @@ import { CreateProject } from "./pages/projects/create";
 import { EditProject } from "./pages/projects/edit";
 import { Tasks } from "./pages/tasks";
 import { CreateTask } from "./pages/tasks/create";
+import { EditTask } from "./pages/tasks/edit";
 
 export function AppRoutes() {
   return (
@@ -16,6 +17,10 @@ export function AppRoutes() {
       <Route
         path="/projects/:projectId/tasks/create"
         element={<CreateTask />}
+      />
+      <Route
+        path="/projects/:projectId/tasks/edit/:id"
+        element={<EditTask />}
       />
     </Routes>
   );

@@ -5,28 +5,41 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Typography from "@mui/material/Typography";
 import MuiLink from "@mui/material/Link";
-import type { TaskCreate } from "../../types/task";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import type { TaskStatus, TaskUpdate } from "../../types/task";
 import { useNavigate, useParams, Link as RouterLink } from "react-router-dom";
 import useSWRMutation from "swr/mutation";
 import axiosInstance from "../../http-client";
 import { useTranslation } from "react-i18next";
 import { AppTitle } from "../../components/app-title";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import useSWR from "swr";
+import Typography from "@mui/material/Typography";
 
-export function CreateTask() {
-  const { projectId } = useParams();
+const TASK_STATUS: { key: TaskStatus; name: string }[] = [
+  { key: "PENDING", name: "status.options.pending" },
+  { key: "IN_PROGRESS", name: "status.options.inProgress" },
+  { key: "BLOCKED", name: "status.options.blocked" },
+  { key: "CANCELED", name: "status.options.canceled" },
+  { key: "COMPLETED", name: "status.options.completed" },
+];
+
+export function EditTask() {
+  const { projectId, id } = useParams();
   const navigate = useNavigate();
-  const { t } = useTranslation("", { keyPrefix: "tasks.create" });
+  const { t } = useTranslation("", { keyPrefix: "tasks.edit" });
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<TaskCreate>();
+    control,
+  } = useForm<TaskUpdate>();
 
   async function projectFetcher({ url, id }: { url: string; id: string }) {
     if (!id) {
@@ -42,18 +55,36 @@ export function CreateTask() {
     error: errorProject,
   } = useSWR({ url: "/projects", id: projectId }, projectFetcher);
 
-  async function create(url: string, { arg }: { arg: TaskCreate }) {
-    const result = await axiosInstance.post(url, arg);
+  const fetcher = async ({ url, id }: { url: string; id: string }) => {
+    const result = await axiosInstance.get(`${url}/${id}`);
     return result.data;
-  }
+  };
+
+  const {
+    data: task,
+    isLoading,
+    error,
+  } = useSWR({ url: "tasks", id }, fetcher);
 
   function listTasks() {
     navigate(`/projects/${projectId}/tasks`);
   }
 
-  const { trigger, isMutating, error } = useSWRMutation("/tasks", create);
+  async function update(url: string, { arg }: { arg: TaskUpdate }) {
+    const result = await axiosInstance.put(`${url}/${id}`, {
+      ...arg,
+      projectId,
+    });
+    return result.data;
+  }
 
-  const submit: SubmitHandler<TaskCreate> = async (data) => {
+  const {
+    trigger,
+    isMutating,
+    error: submitError,
+  } = useSWRMutation("/tasks", update);
+
+  const submit: SubmitHandler<TaskUpdate> = async (data) => {
     await trigger(data);
     listTasks();
   };
@@ -67,10 +98,21 @@ export function CreateTask() {
     });
   }, [projectId, reset]);
 
+  useEffect(() => {
+    if (!task) {
+      return;
+    }
+    reset({
+      name: task.name,
+      description: task.description,
+      status: task.status,
+    });
+  }, [reset, task]);
+
   return (
     <>
       <Grid container spacing={1}>
-        {isLoadingProject ? (
+        {isLoading || isLoadingProject ? (
           <Grid size={{ xs: 12 }}>
             <Stack justifyContent="center" alignItems="center">
               <CircularProgress />
@@ -79,6 +121,10 @@ export function CreateTask() {
         ) : errorProject ? (
           <Grid size={{ xs: 12 }}>
             <Alert severity="error">{t("error.project")}</Alert>
+          </Grid>
+        ) : error ? (
+          <Grid size={{ xs: 12 }}>
+            <Alert severity="error">{t("error.task")}</Alert>
           </Grid>
         ) : !project ? (
           <Grid size={{ xs: 12 }}>
@@ -99,12 +145,12 @@ export function CreateTask() {
                 <MuiLink component={RouterLink} to="/tasks" underline="hover">
                   {t("tasks")}
                 </MuiLink>
-                <Typography>{t("create")}</Typography>
+                <Typography>{task.name}</Typography>
               </Breadcrumbs>
             </Grid>
             <AppTitle title={t("title", { name: project.name })} />
             <Grid container size={{ xs: 12 }} spacing={1}>
-              {!!error && (
+              {!!submitError && (
                 <Grid size={{ xs: 12 }}>
                   <Alert severity="error">{t("error.submit")}</Alert>
                 </Grid>
@@ -135,6 +181,34 @@ export function CreateTask() {
                         multiline
                         fullWidth
                       />
+                    </Grid>
+                    <Grid size={{ xs: 12 }}>
+                      <FormControl variant="filled" fullWidth>
+                        <InputLabel id="task_status">
+                          {t("status.label")}
+                        </InputLabel>
+                        <Controller
+                          render={({ field }) => {
+                            return (
+                              <Select
+                                labelId="task_status"
+                                label={t("status.label")}
+                                sx={{ background: "white" }}
+                                {...field}
+                              >
+                                {TASK_STATUS.map((s) => (
+                                  <MenuItem key={s.key} value={s.key}>
+                                    {t(s.name)}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            );
+                          }}
+                          name="status"
+                          control={control}
+                          defaultValue="PENDING"
+                        />
+                      </FormControl>
                     </Grid>
                     <Grid size={{ xs: 12 }}>
                       <Stack

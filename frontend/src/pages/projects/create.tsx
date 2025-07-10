@@ -1,15 +1,18 @@
 import type { ProjectCreate } from "../../types/project";
 import Grid from "@mui/material/Grid";
-import { AppTitle } from "../../components/app-title";
-import { useForm, type SubmitHandler } from "react-hook-form";
 import TextField from "@mui/material/TextField";
-import { useTranslation } from "react-i18next";
 import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
+import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Typography from "@mui/material/Typography";
+import MuiLink from "@mui/material/Link";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 import useSWRMutation from "swr/mutation";
 import axiosInstance from "../../http-client";
-import Alert from "@mui/material/Alert";
+import { useTranslation } from "react-i18next";
+import { AppTitle } from "../../components/app-title";
+import { useForm, type SubmitHandler } from "react-hook-form";
 
 export function CreateProject() {
   const navigate = useNavigate();
@@ -39,6 +42,14 @@ export function CreateProject() {
   return (
     <>
       <Grid container spacing={1}>
+        <Grid size={{ xs: 12 }}>
+          <Breadcrumbs>
+            <MuiLink component={RouterLink} to="/projects" underline="hover">
+              {t("projects")}
+            </MuiLink>
+            <Typography>{t("create")}</Typography>
+          </Breadcrumbs>
+        </Grid>
         <AppTitle title={t("title")} />
         <Grid container size={{ xs: 12 }} spacing={1}>
           {!!error && (

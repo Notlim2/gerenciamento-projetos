@@ -100,8 +100,8 @@ export function Projects() {
     <>
       <Grid container spacing={1}>
         <AppTitle title={t("title")} />
-        <Grid container size={{ xs: 12 }}>
-          <Grid size={{ xs: 12, sm: 10 }}>
+        <Grid container size={{ xs: 12 }} spacing={1}>
+          <Grid size={{ xs: 9, sm: 10 }}>
             <TextField
               variant="filled"
               label={t("filters.search.label")}
@@ -111,7 +111,7 @@ export function Projects() {
               fullWidth
             />
           </Grid>
-          <Grid size={{ xs: 12, sm: 2 }}>
+          <Grid size={{ xs: 3, sm: 2 }}>
             <Button
               variant="contained"
               fullWidth

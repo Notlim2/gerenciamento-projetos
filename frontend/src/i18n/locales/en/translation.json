@@ -1,25 +1,169 @@
 {
-  "header": { "title": "Teste" },
+  "header": { "title": "Project Management" },
   "projects": {
     "list": {
-      "title": "Projetos"
-    },
-    "create": {
-      "title": "Teste",
-      "name": {
-        "label": "Nome",
-        "errors": {
-          "required": "Inform um Nome"
+      "title": "Projects",
+      "success": {
+        "delete": "Project \"{{name}}\" successfully deleted!"
+      },
+      "error": {
+        "delete": "There was a problem deleting a project. Try again later!",
+        "list": "There was a problem listing the projects. Try again later!"
+      },
+      "alert": {
+        "notFoundForFilter": "No projects were found for the specified filters!"
+      },
+      "filters": {
+        "search": {
+          "label": "Search..."
         }
       },
-      "description": { "label": "Descrição" },
-      "buttons": {
-        "cancel": "Cancelar",
-        "confirm": "Cadastrar"
+      "card": {
+        "edit": "Edit",
+        "remove": "Delete",
+        "showTasks": "View Tasks"
       }
     },
+    "create": {
+      "title": "Create Project",
+      "name": {
+        "label": "Name",
+        "errors": {
+          "required": "Please enter a name"
+        }
+      },
+      "description": { "label": "Description" },
+      "buttons": {
+        "cancel": "Cancel",
+        "confirm": "Create"
+      },
+      "error": {
+        "submit": "There was a problem creating the project. Try again later!"
+      },
+      "create": "Create",
+      "projects": "Projects"
+    },
     "edit": {
-      "title": "Editar Projeto"
+      "title": "Edit Project",
+      "name": {
+        "label": "Name",
+        "errors": {
+          "required": "Please enter a name"
+        }
+      },
+      "description": { "label": "Description" },
+      "buttons": {
+        "cancel": "Cancel",
+        "confirm": "Edit"
+      },
+      "error": {
+        "submit": "There was a problem editing the project. Try again later!"
+      },
+      "edit": "Edit",
+      "projects": "Projects"
+    },
+    "remove": {
+      "title": "Delete Project",
+      "text": "Are you sure you want to delete this project?"
     }
+  },
+  "tasks": {
+    "list": {
+      "title": "Tasks for Project \"{{name}}\"",
+      "filters": {
+        "search": {
+          "label": "Search..."
+        }
+      },
+      "error": {
+        "project": "There was a problem fetching the project associated with the task.",
+        "projectNotFound": "Project associated with the task not found.",
+        "list": "There was a problem listing the tasks. Try again later!",
+        "delete": "There was a problem deleting a task. Try again later!"
+      },
+      "alert": {
+        "notFoundForFilter": "No tasks were found for the specified filters!"
+      },
+      "success": {
+        "delete": "Project \"{{name}}\" successfully deleted!"
+      },
+      "card": {
+        "edit": "Edit",
+        "remove": "Delete",
+        "status": {
+          "PENDING": "To Do",
+          "IN_PROGRESS": "In Progress",
+          "BLOCKED": "Blocked",
+          "CANCELED": "Canceled",
+          "COMPLETED": "Done"
+        }
+      },
+      "projects": "Projects",
+      "tasks": "Tasks"
+    },
+    "create": {
+      "title": "Create Task for Project \"{{name}}\"",
+      "name": {
+        "label": "Name",
+        "errors": {
+          "required": "Please enter a name"
+        }
+      },
+      "description": {
+        "label": "Description"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "confirm": "Create"
+      },
+      "error": {
+        "project": "There was a problem fetching the project associated with the task.",
+        "projectNotFound": "Project associated with the task not found."
+      },
+      "create": "Create",
+      "projects": "Projects",
+      "tasks": "Tasks"
+    },
+    "edit": {
+      "title": "Edit Task for Project \"{{name}}\"",
+      "name": {
+        "label": "Name",
+        "errors": {
+          "required": "Please enter a name"
+        }
+      },
+      "description": {
+        "label": "Description"
+      },
+      "status": {
+        "label": "Status",
+        "options": {
+          "pending": "To Do",
+          "inProgress": "In Progress",
+          "blocked": "Blocked",
+          "canceled": "Canceled",
+          "completed": "Done"
+        }
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "confirm": "Edit"
+      },
+      "error": {
+        "project": "There was a problem fetching the project associated with the task.",
+        "task": "Task not found.",
+        "projectNotFound": "Project associated with the task not found."
+      },
+      "projects": "Projects",
+      "tasks": "Tasks"
+    },
+    "remove": {
+      "title": "Delete Task",
+      "text": "Are you sure you want to delete this task?"
+    }
+  },
+  "common": {
+    "no": "No",
+    "yes": "Yes"
   }
 }
