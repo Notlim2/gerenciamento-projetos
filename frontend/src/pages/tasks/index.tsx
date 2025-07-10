@@ -36,6 +36,20 @@ export function Tasks() {
 
   const [debouncedSearch] = useDebounce(search, DEBOUNCE_TIMEOUT);
 
+  async function projectFetcher({ url, id }: { url: string; id: string }) {
+    if (!id) {
+      return undefined;
+    }
+    const result = await axios.get(`${url}/${id}`);
+    return result.data;
+  }
+
+  const {
+    data: project,
+    isLoading: isLoadingProject,
+    error: errorProject,
+  } = useSWR({ url: "/projects", id: projectId }, projectFetcher);
+
   const fetcher = async ({
     projectId,
     url,
@@ -83,7 +97,7 @@ export function Tasks() {
   }, [data]);
 
   function addTask() {
-    navigate("/tasks/create");
+    navigate(`/projects/${projectId}/tasks/create`);
   }
 
   async function remove(url: string, { arg }: { arg: Task }) {
@@ -106,81 +120,99 @@ export function Tasks() {
   return (
     <>
       <Grid container spacing={1}>
-        <AppTitle title={t("title")} />
-        <Grid container size={{ xs: 12 }}>
-          <Grid size={{ xs: 12, sm: 10 }}>
-            <TextField
-              variant="filled"
-              label={t("filters.search.label")}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              sx={{ background: "white" }}
-              fullWidth
-            />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 2 }}>
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{ height: "100%" }}
-              onClick={mutate}
-            >
-              <SearchIcon />
-            </Button>
-          </Grid>
-        </Grid>
-        <Grid size={{ xs: 12 }}>
-          <Divider />
-        </Grid>
-        {lastRemovedTask && (
+        {isLoadingProject ? (
           <Grid size={{ xs: 12 }}>
-            <Alert severity="success">
-              {t("success.delete", { name: lastRemovedTask.name })}
-            </Alert>
+            <Stack justifyContent="center" alignItems="center">
+              <CircularProgress />
+            </Stack>
           </Grid>
-        )}
-        {errorOnDeleteTask && (
+        ) : errorProject ? (
           <Grid size={{ xs: 12 }}>
-            <Alert severity="error">{t("error.delete")}</Alert>
+            <Alert severity="error">{t("error.project")}</Alert>
           </Grid>
-        )}
-        <Grid container size={{ xs: 12 }}>
-          {isMutating || isLoading ? (
-            <Grid size={{ xs: 12 }}>
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <CircularProgress />
-              </Stack>
-            </Grid>
-          ) : error ? (
-            <Grid size={{ xs: 12 }}>
-              <Alert severity="error">{t("error.list")}</Alert>
-            </Grid>
-          ) : !tasks.length ? (
-            <Grid size={{ xs: 12 }}>
-              <Typography>{t("alert.notFoundForFilter")}</Typography>
-            </Grid>
-          ) : (
-            <>
-              {tasks.map((p: Task) => (
-                <Grid size={{ xs: 12, md: 2, lg: 3 }}>
-                  <TaskCard key={p.id} task={p} remove={handleRemoveTask} />
-                </Grid>
-              ))}
-              <Grid size={{ xs: 12 }}>
-                <Pagination
-                  page={page}
-                  onChange={(_, newPage) => setPage(newPage)}
-                  count={Math.ceil(count / ITEMS_PER_PAGE)}
-                  color="primary"
+        ) : !project ? (
+          <Grid size={{ xs: 12 }}>
+            <Alert severity="error">{t("error.projectNotFound")}</Alert>
+          </Grid>
+        ) : (
+          <>
+            <AppTitle title={t("title", { name: project.name })} />
+            <Grid container size={{ xs: 12 }}>
+              <Grid size={{ xs: 12, sm: 10 }}>
+                <TextField
+                  variant="filled"
+                  label={t("filters.search.label")}
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  sx={{ background: "white" }}
+                  fullWidth
                 />
               </Grid>
-            </>
-          )}
-        </Grid>
+              <Grid size={{ xs: 12, sm: 2 }}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  sx={{ height: "100%" }}
+                  onClick={mutate}
+                >
+                  <SearchIcon />
+                </Button>
+              </Grid>
+            </Grid>
+            <Grid size={{ xs: 12 }}>
+              <Divider />
+            </Grid>
+            {lastRemovedTask && (
+              <Grid size={{ xs: 12 }}>
+                <Alert severity="success">
+                  {t("success.delete", { name: lastRemovedTask.name })}
+                </Alert>
+              </Grid>
+            )}
+            {errorOnDeleteTask && (
+              <Grid size={{ xs: 12 }}>
+                <Alert severity="error">{t("error.delete")}</Alert>
+              </Grid>
+            )}
+            <Grid container size={{ xs: 12 }} spacing={1}>
+              {isMutating || isLoading ? (
+                <Grid size={{ xs: 12 }}>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <CircularProgress />
+                  </Stack>
+                </Grid>
+              ) : error ? (
+                <Grid size={{ xs: 12 }}>
+                  <Alert severity="error">{t("error.list")}</Alert>
+                </Grid>
+              ) : !tasks.length ? (
+                <Grid size={{ xs: 12 }}>
+                  <Typography>{t("alert.notFoundForFilter")}</Typography>
+                </Grid>
+              ) : (
+                <>
+                  {tasks.map((p: Task) => (
+                    <Grid size={{ xs: 12, md: 2, lg: 3 }}>
+                      <TaskCard key={p.id} task={p} remove={handleRemoveTask} />
+                    </Grid>
+                  ))}
+                  <Grid size={{ xs: 12 }}>
+                    <Pagination
+                      page={page}
+                      onChange={(_, newPage) => setPage(newPage)}
+                      count={Math.ceil(count / ITEMS_PER_PAGE)}
+                      color="primary"
+                    />
+                  </Grid>
+                </>
+              )}
+            </Grid>
+          </>
+        )}
       </Grid>
       <Fab
         color="primary"

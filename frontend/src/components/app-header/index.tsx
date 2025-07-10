@@ -50,6 +50,7 @@ export function AppHeader() {
                 value={currentLang.code}
                 onChange={handleChangeLanguage}
                 size="small"
+                sx={{ background: "white" }}
               >
                 {LANGUAGES.map((lang) => (
                   <MenuItem key={lang.code} value={lang.code}>

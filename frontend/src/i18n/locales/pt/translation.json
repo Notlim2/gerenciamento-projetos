@@ -65,7 +65,7 @@
   },
   "tasks": {
     "list": {
-      "title": "Tarefas",
+      "title": "Tarefas do Projeto \"{{name}}\"",
       "filters": {
         "search": {
           "label": "Pesquisar..."
@@ -77,7 +77,30 @@
       },
       "alert": {
         "notFoundForFilter": "Não foram encontradas tarefas para os filtros informados!"
+      },
+      "success": {
+        "delete": "Projeto \"{{name}}\" removido com sucesso!"
       }
+    },
+    "create": {
+      "title": "Cadastrar Tarefa para o Projeto \"{{name}}\"",
+      "name": {
+        "label": "Nome",
+        "errors": {
+          "required": "Informe um Nome"
+        }
+      },
+      "description": {
+        "label": "Descrição"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "confirm": "Cadastrar"
+      }
+    },
+    "remove": {
+      "title": "Remover Tarefa",
+      "text": "Tem certeza que deseja remover esta tarefa?"
     }
   },
   "common": {

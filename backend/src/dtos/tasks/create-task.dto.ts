@@ -1,5 +1,12 @@
 import { Type } from "class-transformer";
-import { IsInt, IsOptional, IsString, Max, Min } from "class-validator";
+import {
+  IsInt,
+  IsOptional,
+  IsString,
+  MaxLength,
+  Min,
+  MinLength,
+} from "class-validator";
 
 export class CreateTaskDto {
   @IsInt()
@@ -8,8 +15,8 @@ export class CreateTaskDto {
   projectId: number;
 
   @IsString()
-  @Min(2)
-  @Max(255)
+  @MinLength(2)
+  @MaxLength(255)
   name: string;
 
   @IsOptional()

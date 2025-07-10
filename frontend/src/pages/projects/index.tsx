@@ -137,7 +137,7 @@ export function Projects() {
             <Alert severity="error">{t("error.delete")}</Alert>
           </Grid>
         )}
-        <Grid container size={{ xs: 12 }}>
+        <Grid container size={{ xs: 12 }} spacing={1}>
           {isMutating || isLoading ? (
             <Grid size={{ xs: 12 }}>
               <Stack

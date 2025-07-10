@@ -11,7 +11,7 @@ const router = Router();
 router.get("/", validateDto(GetTasksDto, "query"), TaskController.getAll);
 router.get("/:id", validateDto(IdDto, "params"), TaskController.getById);
 router.post("/", validateDto(CreateTaskDto, "body"), TaskController.create);
-router.post(
+router.put(
   "/:id",
   validateDto(IdDto, "params"),
   validateDto(UpdateTaskDto, "body"),
