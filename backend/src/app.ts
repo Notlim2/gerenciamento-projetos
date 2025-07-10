@@ -9,6 +9,6 @@ app.use(cors());
 
 app.use(express.json());
 app.use("/projects", projectRoutes);
-app.use("/task", taskRoutes);
+app.use("/tasks", taskRoutes);
 
 export default app;

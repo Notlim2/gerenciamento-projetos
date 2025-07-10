@@ -28,7 +28,9 @@ export function EditProject() {
     data: project,
     isLoading,
     error: getProjectError,
-  } = useSWR({ url: "/projects", id }, getProject);
+  } = useSWR({ url: "/projects", id }, getProject, {
+    revalidateOnFocus: false,
+  });
 
   const {
     register,

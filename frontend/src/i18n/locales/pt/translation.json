@@ -20,7 +20,8 @@
       },
       "card": {
         "edit": "Editar",
-        "remove": "Excluir"
+        "remove": "Excluir",
+        "showTasks": "Ver Tarefas"
       }
     },
     "create": {
@@ -60,6 +61,23 @@
     "remove": {
       "title": "Remover Projeto",
       "text": "Tem certeza que deseja remover este projeto?"
+    }
+  },
+  "tasks": {
+    "list": {
+      "title": "Tarefas",
+      "filters": {
+        "search": {
+          "label": "Pesquisar..."
+        }
+      },
+      "error": {
+        "list": "Houve um problema ao listar as tarefas. Tente novamente mais tarde!",
+        "delete": "Houve um problema ao remover uma tarefa. Tente novamente mais tarde!"
+      },
+      "alert": {
+        "notFoundForFilter": "Não foram encontradas tarefas para os filtros informados!"
+      }
     }
   },
   "common": {

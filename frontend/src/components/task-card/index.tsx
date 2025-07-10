@@ -6,42 +6,36 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
 import { green } from "@mui/material/colors";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
-import ChecklistIcon from "@mui/icons-material/Checklist";
 import dayjs from "dayjs";
-import type { Project } from "../../types/project";
+import type { Task } from "../../types/task";
 import { useNavigate } from "react-router-dom";
 import { ConfirmDialog } from "../confirm-dialog";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import Tooltip from "@mui/material/Tooltip";
 
-interface ProjectCardProps {
-  project: Project;
-  remove: (project: Project) => void;
+interface TaskCardProps {
+  task: Task;
+  remove: (task: Task) => void;
 }
 
-export default function ProjectCard({ project, remove }: ProjectCardProps) {
+export default function TaskCard({ task, remove }: TaskCardProps) {
   const [removeDialogOpen, setRemoveDialogOpen] = useState(false);
-  const { t } = useTranslation("", { keyPrefix: "projects" });
+  const { t } = useTranslation("", { keyPrefix: "tasks" });
   const navigate = useNavigate();
 
-  function editProject() {
-    if (!project.id) {
+  function editTask() {
+    if (!task.id) {
       return;
     }
-    navigate(`/projects/edit/${project.id}`);
+    navigate(`/tasks/edit/${task.id}`);
   }
 
-  function showTasks() {
-    if (!project.id) {
-      return;
-    }
-    navigate(`/projects/${project.id}/tasks`);
-  }
+  const done = useMemo(() => task.status === "COMPLETED", [task.status]);
 
   return (
     <>
@@ -53,19 +47,20 @@ export default function ProjectCard({ project, remove }: ProjectCardProps) {
               alignItems="center"
               justifyContent="space-between"
             >
-              <Typography>{project.name}</Typography>
-              {!!project.done && (
+              <Typography>{task.name}</Typography>
+              {!!done && (
                 <Avatar sx={{ background: green[500] }} aria-label="feito">
                   <CheckIcon />
                 </Avatar>
               )}
+              {/* TODO - FAZER PARA CANCELADO */}
             </Stack>
           }
-          subheader={dayjs(project.createdAt).format("DD MMM YYYY ")}
+          subheader={dayjs(task.createdAt).format("DD MMM YYYY ")}
         />
         <CardContent>
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
-            {project.description}
+            {task.description}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -79,21 +74,8 @@ export default function ProjectCard({ project, remove }: ProjectCardProps) {
             </IconButton>
           </Tooltip>
           <Tooltip title={t("list.card.edit")}>
-            <IconButton
-              aria-label="editar"
-              color="primary"
-              onClick={editProject}
-            >
+            <IconButton aria-label="editar" color="primary" onClick={editTask}>
               <EditIcon />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title={t("list.card.showTasks")}>
-            <IconButton
-              aria-label="ver tarefas"
-              color="info"
-              onClick={showTasks}
-            >
-              <ChecklistIcon />
             </IconButton>
           </Tooltip>
         </CardActions>
@@ -103,7 +85,7 @@ export default function ProjectCard({ project, remove }: ProjectCardProps) {
         onClose={() => setRemoveDialogOpen(false)}
         title={t("remove.title")}
         text={t("remove.text")}
-        onConfirm={() => remove(project)}
+        onConfirm={() => remove(task)}
       />
     </>
   );
