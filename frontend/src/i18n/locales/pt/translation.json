@@ -17,6 +17,10 @@
         "search": {
           "label": "Pesquisar..."
         }
+      },
+      "card": {
+        "edit": "Editar",
+        "remove": "Excluir"
       }
     },
     "create": {

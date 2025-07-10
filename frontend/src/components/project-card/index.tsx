@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { ConfirmDialog } from "../confirm-dialog";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import Tooltip from "@mui/material/Tooltip";
 
 interface ProjectCardProps {
   project: Project;
@@ -60,16 +61,24 @@ export default function ProjectCard({ project, remove }: ProjectCardProps) {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton
-            aria-label="excluir"
-            color="error"
-            onClick={() => setRemoveDialogOpen(true)}
-          >
-            <DeleteIcon />
-          </IconButton>
-          <IconButton aria-label="editar" color="primary" onClick={editProject}>
-            <EditIcon />
-          </IconButton>
+          <Tooltip title={t("list.card.remove")}>
+            <IconButton
+              aria-label="excluir"
+              color="error"
+              onClick={() => setRemoveDialogOpen(true)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={t("list.card.edit")}>
+            <IconButton
+              aria-label="editar"
+              color="primary"
+              onClick={editProject}
+            >
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
         </CardActions>
       </Card>
       <ConfirmDialog
